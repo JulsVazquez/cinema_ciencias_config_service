@@ -1,0 +1,6 @@
+# Propiedades específicas del Gateway (spring.application.name = gateway-service).
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.cloud.gateway: TRACE
+    mx.unam.fciencias: DEBUG

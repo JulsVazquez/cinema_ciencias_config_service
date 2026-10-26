@@ -1,0 +1,23 @@
+# =============================================================================
+# Propiedades COMUNES a todos los microservicios (el Config Server las sirve a
+# cualquier cliente, sin importar su spring.application.name).
+# En producción estos secretos se inyectan por variable de entorno / vault.
+# =============================================================================
+cinema:
+  security:
+    # Firma de los JWT: la usa el Auth Service para emitirlos y el Gateway para validarlos.
+    jwtSecret: "8a9b5c2d1e4f7a0c3b6d9e2f5a8c1b4d7e0f3a6c9b2d5e8f1a4c7b0e3d6f9a2c"
+    jwtExpirationMs: 86400000 # 24 horas
+    # Secreto compartido Gateway <-> monolito (patrón "Trust the Gateway"): el monolito
+    # solo confía en los headers X-User-* si la petición trae este secreto.
+    gatewaySecret: "b8a181327e86fb1527b84f14b464543c339cb1b7b720c877a8a4e91c619d84e7"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    # Refresca el registro cada 5 s (por defecto 30 s) para que el Gateway vea
+    # rápido a los servicios recién arrancados.
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
